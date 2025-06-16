@@ -1,8 +1,9 @@
 import os
+from typing import Tuple
 
 import torch
 import torch.nn as nn
-from typing import Tuple
+
 from src.utils import plot_loss, save_checkpoint
 
 
