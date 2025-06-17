@@ -5,3 +5,4 @@ augmentation/data/*
 checkpoints/*
 test.ipynb
 *.plan
+**/data/*
