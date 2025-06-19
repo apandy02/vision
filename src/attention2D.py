@@ -11,8 +11,8 @@ import torch.nn as nn
 
 
 def scaled_dot_product_attention(
-        q: torch.Tensor, 
-        k: torch.Tensor, 
+        q: torch.Tensor,
+        k: torch.Tensor,
         d_k: int,
         mask: torch.Tensor
 ) -> torch.Tensor:
@@ -100,8 +100,8 @@ class Attention2D(nn.Module):
         v = self.value_projection(v).view(batch_size, v_len, self.num_heads, self.d_k)
 
         attention = scaled_dot_product_attention(
-            q.transpose(1, 2), 
-            k.transpose(1, 2), 
+            q.transpose(1, 2),
+            k.transpose(1, 2),
             self.d_k, 
             self.mask
         )
