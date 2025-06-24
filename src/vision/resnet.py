@@ -4,6 +4,7 @@ Author: Aryaman Pandya
 """
 
 import torch.nn as nn
+from typing import Optional
 
 
 class ResBlock(nn.Module):
@@ -17,13 +18,13 @@ class ResBlock(nn.Module):
         self,
         in_channels: int,
         out_channels: int,
-        activation: nn.Module = nn.ReLU,
+        activation: nn.Module,
         kernel_size: int = 3,
         stride: int = 1,
         padding: int = 1,
         dropout: float = 0.2,
         num_groups: int = 1,
-        timestep_emb_dim: int = None,
+        timestep_emb_dim: Optional[int] = None,
     ):
         """
         Args:
@@ -107,7 +108,7 @@ class ResNet(nn.Module):
         num_channels: int,
         num_classes: int,
         filters: list[int],
-        activation: nn.Module = nn.ReLU,
+        activation: nn.Module,
         stride: int = 2,
         dropout: float = 0.2,
     ):
