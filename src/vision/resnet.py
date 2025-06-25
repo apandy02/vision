@@ -4,6 +4,7 @@ Author: Aryaman Pandya
 """
 
 import torch.nn as nn
+import torch
 from typing import Optional
 
 
@@ -143,7 +144,7 @@ class ResNet(nn.Module):
         )
         self.dropout = nn.Dropout(dropout)
 
-    def forward(self, x):
+    def forward(self, x: torch.Tensor):
         for _, layer in enumerate(self.res_layers):
             x = layer(x)
 
