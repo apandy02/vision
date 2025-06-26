@@ -11,10 +11,10 @@ import torch.nn as nn
 
 
 def scaled_dot_product_attention(
-        q: torch.Tensor,
-        k: torch.Tensor,
-        d_k: int,
-        mask: torch.Tensor
+    q: torch.Tensor,
+    k: torch.Tensor,
+    d_k: int,
+    is_masked: bool,
 ) -> torch.Tensor:
     """
     Scaled dot product attention.
@@ -29,13 +29,14 @@ def scaled_dot_product_attention(
         attention: attention tensor
     """
     scores = torch.matmul(q, k.transpose(-2, -1)) / math.sqrt(d_k)
-    if mask:
+    if is_masked:
         mask = torch.tril(torch.ones(scores.shape)).to(q.device)
         scores = scores.masked_fill(mask == 0, float('-inf'))
+    
     return nn.Softmax(-1)(scores)
 
 
-class Attention2D(nn.Module):
+class Attention(nn.Module):
     """
     Multihead attention.
     """
@@ -46,7 +47,7 @@ class Attention2D(nn.Module):
         num_channels: int,
         num_groups: int = 8,
         d_k: Optional[int] = None,
-        mask: bool = False
+        is_masked: bool = False
     ):
         """
         Args:
@@ -57,7 +58,7 @@ class Attention2D(nn.Module):
             num_groups: number of groups for group normalization
             mask: whether to use a mask
         """
-        super(Attention2D, self).__init__()
+        super(Attention, self).__init__()
         self.d_k = d_k if d_k is not None else num_channels
         self.num_heads = num_heads
 
@@ -71,21 +72,15 @@ class Attention2D(nn.Module):
         )
         self.output_layer = nn.Linear(num_heads * self.d_k, num_channels)
         self.dropout = nn.Dropout(dropout)
-        self.mask = mask
+        self.mask = is_masked
         self.num_channels = num_channels
-
-    def forward(self, x, y=None):
+    
+    def attention_values(self, x: torch.Tensor, y: torch.Tensor) -> torch.Tensor:
         """
-        forward pass for the attention mechanism.
-
-        Args:
-            x: input tensor
-            y: optional tensor for cross-attention
+        Computes attention values.
         """
-        batch_size, n_channels, height, width = x.shape
+        batch_size = x.shape[0]
         x = self.group_norm(x)
-        x = x.view(batch_size, n_channels, height * width).permute(0, 2, 1)
-
         residual = x
 
         if y is not None:
@@ -102,7 +97,7 @@ class Attention2D(nn.Module):
         attention = scaled_dot_product_attention(
             q.transpose(1, 2),
             k.transpose(1, 2),
-            self.d_k, 
+            self.d_k,
             self.mask
         )
         output = torch.matmul(attention, v.transpose(1, 2))
@@ -110,6 +105,36 @@ class Attention2D(nn.Module):
 
         h = self.dropout(output) + residual
 
-        h = h.permute(0, 2, 1).view(batch_size, n_channels, height, width)
+        return h.permute(0, 2, 1)
 
-        return h
+    def forward(self, x, y=None):
+        """
+        forward pass for the attention mechanism.
+
+        Args:
+            x: input tensor
+            y: optional tensor for cross-attention
+        """
+        return self.attention_values(x, y)
+
+
+class Attention2D(Attention):
+    """
+    Multihead attention.
+    """
+    def forward(self, x, y=None):
+        """
+        forward pass for the attention mechanism.
+
+        Args:
+            x: input tensor
+            y: optional tensor for cross-attention
+        """
+        batch_size, n_channels, height, width = x.shape
+        x = x.view(batch_size, n_channels, height * width).permute(0, 2, 1)
+
+        if y is not None:
+            return self.attention_values(x, y).view(batch_size, n_channels, height, width)
+
+        return self.attention_values(x, None).view(batch_size, n_channels, height, width)
+
