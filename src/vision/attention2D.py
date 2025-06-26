@@ -32,7 +32,7 @@ def scaled_dot_product_attention(
     if is_masked:
         mask = torch.tril(torch.ones(scores.shape)).to(q.device)
         scores = scores.masked_fill(mask == 0, float('-inf'))
-    
+
     return nn.Softmax(-1)(scores)
 
 
@@ -74,7 +74,7 @@ class Attention(nn.Module):
         self.dropout = nn.Dropout(dropout)
         self.mask = is_masked
         self.num_channels = num_channels
-    
+
     def attention_values(self, x: torch.Tensor, y: torch.Tensor) -> torch.Tensor:
         """
         Computes attention values.
@@ -137,4 +137,3 @@ class Attention2D(Attention):
             return self.attention_values(x, y).view(batch_size, n_channels, height, width)
 
         return self.attention_values(x, None).view(batch_size, n_channels, height, width)
-
