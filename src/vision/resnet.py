@@ -3,9 +3,9 @@ This module contains the building blocks for a ResNet model.
 Author: Aryaman Pandya
 """
 
+from typing import Optional
 import torch.nn as nn
 import torch
-from typing import Optional
 
 
 class ResBlock(nn.Module):
