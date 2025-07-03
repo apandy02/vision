@@ -61,6 +61,9 @@ class Attention(nn.Module):
         super(Attention, self).__init__()
         self.d_k = d_k if d_k is not None else num_channels
         self.num_heads = num_heads
+        self.dropout = nn.Dropout(dropout)
+        self.mask = is_masked
+        self.num_channels = num_channels
 
         self.query_projection = nn.Linear(num_channels, num_heads * self.d_k)
         self.key_projection = nn.Linear(num_channels, num_heads * self.d_k)
@@ -71,9 +74,7 @@ class Attention(nn.Module):
             num_channels=num_channels
         )
         self.output_layer = nn.Linear(num_heads * self.d_k, num_channels)
-        self.dropout = nn.Dropout(dropout)
-        self.mask = is_masked
-        self.num_channels = num_channels
+        
 
     def attention_values(self, x: torch.Tensor, y: torch.Tensor) -> torch.Tensor:
         """

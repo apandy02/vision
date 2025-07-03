@@ -1565,6 +1565,7 @@ version = "0.1.0"
 source = { editable = "." }
 dependencies = [
     { name = "diffusers" },
+    { name = "ipykernel" },
     { name = "ipython" },
     { name = "matplotlib" },
     { name = "numpy" },
@@ -1582,6 +1583,7 @@ dev = [
 [package.metadata]
 requires-dist = [
     { name = "diffusers", specifier = ">=0.30.3" },
+    { name = "ipykernel", specifier = ">=6.29.5" },
     { name = "ipython", specifier = ">=8.28.0" },
     { name = "matplotlib", specifier = ">=3.9.2" },
     { name = "numpy", specifier = ">=2.1.2" },

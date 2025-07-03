@@ -6,6 +6,7 @@ readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [
     "diffusers>=0.30.3",
+    "ipykernel>=6.29.5",
     "ipython>=8.28.0",
     "matplotlib>=3.9.2",
     "numpy>=2.1.2",
