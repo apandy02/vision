@@ -81,7 +81,6 @@ class Attention(nn.Module):
         Computes attention values.
         """
         batch_size = x.shape[0]
-        x = self.group_norm(x)
         residual = x
 
         if y is not None:
@@ -104,9 +103,7 @@ class Attention(nn.Module):
         output = torch.matmul(attention, v.transpose(1, 2))
         output = self.output_layer(output.transpose(1, 2).contiguous().view(batch_size, q_len, -1))
 
-        h = self.dropout(output) + residual
-
-        return h.permute(0, 2, 1)
+        return self.dropout(output) + residual
 
     def forward(self, x, y=None):
         """
@@ -133,8 +130,9 @@ class Attention2D(Attention):
         """
         batch_size, n_channels, height, width = x.shape
         x = x.view(batch_size, n_channels, height * width).permute(0, 2, 1)
+        x = self.group_norm(x)
 
         if y is not None:
             return self.attention_values(x, y).view(batch_size, n_channels, height, width)
 
-        return self.attention_values(x, None).view(batch_size, n_channels, height, width)
+        return self.attention_values(x, None).permute(0, 2, 1).view(batch_size, n_channels, height, width)
