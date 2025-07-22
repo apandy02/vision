@@ -6,3 +6,4 @@ checkpoints/*
 test.ipynb
 *.plan
 **/data/*
+**/wandb/*
