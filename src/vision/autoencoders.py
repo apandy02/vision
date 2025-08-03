@@ -1,6 +1,8 @@
-import torch.nn as nn
 import torch
+import torch.nn as nn
+
 from src.vision.resnet import ResBlock
+
 
 class VQVAE(nn.Module):
     """

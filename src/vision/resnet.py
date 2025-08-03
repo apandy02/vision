@@ -4,8 +4,9 @@ Author: Aryaman Pandya
 """
 
 from typing import Optional
-import torch.nn as nn
+
 import torch
+import torch.nn as nn
 
 
 class ResBlock(nn.Module):
