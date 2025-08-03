@@ -3,6 +3,24 @@ import torch
 from src.vision.resnet import ResBlock
 
 class VQVAE(nn.Module):
+    """
+    Vector Quantized Variational Autoencoder (VQ-VAE) implementation.
+
+    This class implements a VQ-VAE, which encodes input images into a discrete latent space
+    using a codebook of embeddings. The encoder maps the input to a latent representation,
+    which is then quantized to the nearest codebook vector. The decoder reconstructs the
+    image from the quantized latent vectors.
+
+    Args:
+        n_channels (int): Number of input channels (e.g., 1 for grayscale, 3 for RGB).
+        latent_dim (int): Dimensionality of the latent space.
+        codebook_size (int): Number of discrete codebook vectors.
+
+    Attributes:
+        encoder (nn.Module): The encoder network.
+        codebook (nn.Parameter): Learnable codebook of embeddings.
+        decoder (nn.Module): The decoder network.
+    """
     def __init__(
         self,
         n_channels: int,
