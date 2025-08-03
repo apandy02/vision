@@ -50,7 +50,7 @@ vision/
 
 Polished, reusable modules extracted from notebooks:
 
-- `attention2d.py`: 2D self-attention layer
+- `attention2D.py`: all things attention, including 2D attention and its building blocks
 - `resnet.py`: building blocks for residual networks
 - `unet.py`: building blocks for UNet for image generation
 - `ddpm.py`: training and sampling for denoising diffusion probabilistic models

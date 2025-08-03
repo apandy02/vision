@@ -9,7 +9,7 @@ and right blocks, the middle conv block, and the timestep embedding.
 import torch
 import torch.nn as nn
 
-from .attention2D import Attention2D
+from .attention import Attention2D
 from .resnet import ResBlock
 
 
