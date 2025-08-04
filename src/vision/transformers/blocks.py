@@ -1,3 +1,8 @@
+import torch
+import torch.nn as nn
+
+from .attention import Attention
+
 class MLP(nn.Module): 
     """
     Class implementation of a position wise MLP
