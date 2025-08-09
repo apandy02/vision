@@ -1,5 +1,8 @@
 # Computer Vision
 
+`Post GenAI Era disclaimer`: I have tried to re-implement papers from scratch here, and have cursor tab disabled while developing things. I have used LLMs to help me understand things, find bugs, optimize training and so on, but the main goal here was to learn things, so the 
+first pass of each implementation (the foundation) was written by a human :)
+
 In this repository, I implement computer vision techniques and ideas that are initially new to me in notebooks. 
 Then, if the notebook contains blocks of code that can be re-used for different vision tasks, I put them in files 
 under the `src` directory. 
