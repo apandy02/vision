@@ -20,9 +20,11 @@ vision/
 │   │   ├── autoencoders/   # Autoencoder implementations
 │   │   ├── diffusion/      # Diffusion model implementations
 │   │   └── gans/           # Generative Adversarial Networks
+│   ├── video/              # Video understanding and processing
 │   └── [other notebooks]   # Classification, segmentation, etc.
 ├── src/                    # Reusable PyTorch modules and utilities
-├── images/                 # Generated images and visualizations
+│   └── vision/             # Core vision library modules
+│       └── transformers/   # Transformer-related modules
 ├── augmentation/           # Traffic sign recognition project (GTSRB)
 ├── pyproject.toml          # Project configuration
 └── README.md              # This file
@@ -35,6 +37,10 @@ vision/
 - `resnets.ipynb`: residual networks
 - `fcn_segmentation.ipynb`: fully convolutional networks for semantic segmentation
 - `mixture_of_experts.ipynb`: implementing a sparsely-gated mixture of experts with ResNets
+- `vit.ipynb`: vision transformer implementation
+
+### Video Understanding (`nbs/video/`)
+- `timesformer.ipynb`: implementing TimeSFormer for video classification
 
 ### Generative Models (`nbs/generative/`)
 
@@ -53,11 +59,16 @@ vision/
 
 Polished, reusable modules extracted from notebooks:
 
-- `attention2D.py`: all things attention, including 2D attention and its building blocks
+### Core Vision Library (`src/vision/`)
+- `autoencoders.py`: autoencoder and variational autoencoder implementations
 - `resnet.py`: building blocks for residual networks
 - `unet.py`: building blocks for UNet for image generation
 - `ddpm.py`: training and sampling for denoising diffusion probabilistic models
 - `utils.py`: utility functions
+
+### Transformer Modules (`src/vision/transformers/`)
+- `attention.py`: attention mechanisms and building blocks
+- `blocks.py`: transformer block implementations
 
 ## Projects
 
