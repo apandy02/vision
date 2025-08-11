@@ -1,8 +1,5 @@
 # Computer Vision
 
-`Post GenAI Era disclaimer`: I have tried to re-implement papers from scratch here, and have cursor tab disabled while developing things. I have used LLMs to help me understand things, find bugs, optimize training and so on, but the main goal here was to learn things, so the 
-first pass of each implementation (the foundation) was written by a human :)
-
 In this repository, I implement computer vision techniques and ideas that are initially new to me in notebooks. 
 Then, if the notebook contains blocks of code that can be re-used for different vision tasks, I put them in files 
 under the `src` directory. 
@@ -21,11 +18,11 @@ vision/
 │   │   ├── diffusion/      # Diffusion model implementations
 │   │   └── gans/           # Generative Adversarial Networks
 │   ├── video/              # Video understanding and processing
+│   ├── augmentation/       # Traffic sign recognition project (GTSRB)
 │   └── [other notebooks]   # Classification, segmentation, etc.
 ├── src/                    # Reusable PyTorch modules and utilities
 │   └── vision/             # Core vision library modules
 │       └── transformers/   # Transformer-related modules
-├── augmentation/           # Traffic sign recognition project (GTSRB)
 ├── pyproject.toml          # Project configuration
 └── README.md              # This file
 ```
@@ -41,6 +38,10 @@ vision/
 
 ### Video Understanding (`nbs/video/`)
 - `timesformer.ipynb`: implementing TimeSFormer for video classification
+
+### Data Augmentation (`nbs/augmentation/`)
+- `GTSRBDataAugmentation.ipynb`: data augmentation techniques exploration
+- `Project2GTSRB.ipynb`: transfer learning project using the German Traffic Sign Recognition Benchmark (GTSRB) dataset with ResNet architecture and extensive data augmentation techniques
 
 ### Generative Models (`nbs/generative/`)
 
@@ -70,7 +71,6 @@ Polished, reusable modules extracted from notebooks:
 - `attention.py`: attention mechanisms and building blocks
 - `blocks.py`: transformer block implementations
 
-## Projects
 
-### Traffic Sign Recognition (`augmentation/`)
-Transfer learning project using the German Traffic Sign Recognition Benchmark (GTSRB) dataset with ResNet architecture and extensive data augmentation techniques.
+`Post GenAI Era disclaimer`: I have tried to re-implement papers from scratch here, and have cursor tab disabled while developing things. I have used LLMs to help me understand things, find bugs, optimize training and so on, but the main goal here was to learn things, so the 
+first pass of each implementation (the foundation) was written by a human :)
