@@ -7,3 +7,4 @@ test.ipynb
 *.plan
 **/data/*
 **/wandb/*
+**/lightning_logs/*
