@@ -94,9 +94,9 @@ class Attention(nn.Module):
 
         k_len, q_len, v_len = k.size(1), q.size(1), v.size(1)
 
-        k = self.key_projection(k).view(batch_size, k_len, self.num_heads, self.d_k)
-        q = self.query_projection(q).view(batch_size, q_len, self.num_heads, self.d_k)
-        v = self.value_projection(v).view(batch_size, v_len, self.num_heads, self.d_k)
+        k = self.key_projection(k).view(batch_size, k_len, self.num_heads, self.d_k).transpose(1, 2)
+        q = self.query_projection(q).view(batch_size, q_len, self.num_heads, self.d_k).transpose(1, 2)
+        v = self.value_projection(v).view(batch_size, v_len, self.num_heads, self.d_k).transpose(1, 2)
 
         attn_mask = None
         if self.mask:
