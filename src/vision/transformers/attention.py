@@ -9,6 +9,8 @@ from typing import Optional
 import torch
 import torch.nn as nn
 
+from torch.nn import functional as F
+
 
 def scaled_dot_product_attention(
     q: torch.Tensor,
@@ -18,6 +20,8 @@ def scaled_dot_product_attention(
 ) -> torch.Tensor:
     """
     Scaled dot product attention.
+
+    [Usage deprecated]
 
     Args:
         q: query tensor
@@ -94,13 +98,18 @@ class Attention(nn.Module):
         q = self.query_projection(q).view(batch_size, q_len, self.num_heads, self.d_k)
         v = self.value_projection(v).view(batch_size, v_len, self.num_heads, self.d_k)
 
-        attention = scaled_dot_product_attention(
-            q.transpose(1, 2),
-            k.transpose(1, 2),
-            self.d_k,
-            self.mask
+        attn_mask = None
+        if self.mask:
+            attn_mask = torch.tril(torch.ones(q_len, k_len, device=q.device, dtype=torch.bool))
+        
+        output = F.scaled_dot_product_attention(
+            query=q,
+            key=k, 
+            value=v,
+            attn_mask=attn_mask,
+            dropout_p=self.dropout.p if self.training else 0.0,
+            is_causal=self.mask and attn_mask is None
         )
-        output = torch.matmul(attention, v.transpose(1, 2))
         output = self.output_layer(output.transpose(1, 2).contiguous().view(batch_size, q_len, -1))
 
         return self.dropout(output) + residual
