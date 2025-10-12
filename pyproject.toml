@@ -12,6 +12,7 @@ dependencies = [
     "lightning>=2.5.2",
     "matplotlib>=3.9.2",
     "numpy>=2.1.2",
+    "pandas>=2.3.3",
     "requests>=2.32.3",
     "ruff>=0.6.9",
     "torch>=2.4.1",
